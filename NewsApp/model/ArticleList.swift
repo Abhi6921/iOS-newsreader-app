@@ -10,11 +10,19 @@ import Foundation
 struct ArticleList: Codable {
     let results: [Results]
     let nextID: Int
-
-    enum CodingKeys: String, CodingKey {
-        case results = " Results "
-        case nextID = " NextId "
+    
+    private enum CodingKeys: String, CodingKey {
+        case results = "Results"
+        case nextID = "NextId"
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.results = try container.decode([Results].self, forKey: .results)
+        self.nextID = try container.decode(Int.self, forKey: .nextID)
     }
 }
+
+
 
 

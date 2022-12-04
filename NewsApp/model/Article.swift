@@ -14,7 +14,8 @@ struct Results: Codable {
     let related: [String]
     let category: [Category]
     let isLike: Bool
-
+    
+    private enum ArticleResponseKeys
     enum CodingKeys: String, CodingKey {
         case id = "ID"
         case feed = "Feed"
