@@ -8,28 +8,36 @@
 import SwiftUI
 
 struct ArticleListView: View {
-    
-    @EnvironmentObject var newsStore: NewsStore
+    @StateObject var articleViewModel = ArticleViewModel()
+    private let adaptiveColumns = [
+        GridItem(.adaptive(minimum: 150))
+    ]
     
     var body: some View {
-//        List($newsStore.articles) { article in
-//            ArticleCell(article: article)
-//        }
-//        .onAppear(perform: handleOnAppear)
-        
-        //Text("Hello World")
-        List($newsStore.articles) { article in
+        //articleViewModel.articles
+        ScrollView {
+            if articleViewModel.isLoading {
+                Spacer(minLength: 395)
+                ProgressView("Loading")
+            }
             
+            LazyVStack(alignment: .leading,spacing: 5) {
+                ForEach(articleViewModel.articles) { article in
+                    ArticleCell(article: article)
+
+                }
+            }.navigationTitle("News")
+            .onAppear(perform: {
+                articleViewModel.fetchAllArticles()
+            })
         }
+        
+        
     }
 }
-private extension ArticleListView {
-    func handleOnAppear() {
-        newsStore.loadData()
-    }
-}
+
 struct ArticleListView_Previews: PreviewProvider {
     static var previews: some View {
-        ArticleListView().environmentObject(NewsStore())
+        ArticleListView()
     }
 }
