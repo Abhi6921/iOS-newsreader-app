@@ -9,42 +9,53 @@ import SwiftUI
 
 struct ArticleListView: View {
     @StateObject private var newsController = NewsController()
-
-    var body: some View {
-        NavigationView {
-            Group {
-                if newsController.isLoading {
-                    ProgressView("Loading Articles")
-                } else {
-                    List(newsController.newsArticles) { article in
-                        NavigationLink(destination: ArticleDetailView(article: article)) {
-                            HStack(alignment: .center, spacing: 16) {
-                                // Article Image
-                                RemoteImage(url: article.image)
-                                    .frame(width: 80, height: 80)
-                                    .aspectRatio(contentMode: .fit)
-
-                                // Article Title
-                                VStack(alignment: .leading, spacing: 8) {
-                                    Text(article.title)
-                                        .font(.headline)
-                                        .lineLimit(2)
-                                    // Additional details if needed
+        @Environment(\.presentationMode) var presentationMode // Add this environment variable
+        var body: some View {
+            NavigationView {
+                Group {
+                    if newsController.isLoading {
+                        ProgressView("Loading Articles")
+                    } else {
+                        List(newsController.newsArticles) { article in
+                            NavigationLink(
+                                destination: ArticleDetailView(article: article)
+                            ) {
+                                HStack(alignment: .center, spacing: 16) {
+                                    // Article Image
+                                    RemoteImage(url: article.image)
+                                        .frame(width: 80, height: 80)
+                                        .aspectRatio(contentMode: .fit)
+                                    
+                                    // Article Title
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        Text(article.title)
+                                            .font(.headline)
+                                            .lineLimit(2)
+                                        // Additional details if needed
+                                    }
+                                    .padding(.vertical)
                                 }
-                                .padding(.vertical)
+                                .padding(.horizontal)
                             }
-                            .padding(.horizontal)
                         }
+                        .listStyle(PlainListStyle())
+                        .navigationBarTitle("Article News", displayMode: .inline)
+                        .navigationBarItems(trailing: Button(action: {
+                            // Handle logout action here
+                            presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Text("Logout")
+                                .font(.headline)
+                                .foregroundColor(.blue)
+                        })
                     }
-                    .listStyle(PlainListStyle())
-                    .navigationTitle("Article News")
+                }
+                .onAppear {
+                    newsController.fetchAllNewsData()
                 }
             }
-            .onAppear {
-                newsController.fetchAllNewsData()
-            }
+            .navigationBarHidden(true)
         }
-    }
 }
 
 

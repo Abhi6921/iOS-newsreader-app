@@ -7,11 +7,7 @@
 
 import Foundation
 
-class LoginViewModel: ObservableObject {
-    @Published var username = ""
-    @Published var password = ""
-    @Published var isLoggedin = false
-    @Published var showErrorPopup = false
+class LoginController: ObservableObject {
     
-    //func login(completion: @escaping (Bool) -> Void)
+
 }

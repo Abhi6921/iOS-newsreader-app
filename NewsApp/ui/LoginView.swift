@@ -8,86 +8,90 @@
 import SwiftUI
 
 struct LoginView: View {
-    
     @State private var username = ""
     @State private var password = ""
-    @State private var isLoggedin = false
-    @State private var isRegistering = false
-    
-    var body: some View {
-            NavigationView {
+    @StateObject private var loginModel = LoginViewModel()
+    @State private var isDashboardActive = false
+
+        var body: some View {
+            NavigationView { // Wrap your view in a NavigationView
                 VStack {
+                    Text("News App Login")
+                        .font(.largeTitle)
+                        .padding(.bottom, 20)
+
                     Image(systemName: "person.circle.fill")
                         .resizable()
-                        .frame(width: 100, height: 100)
+                        .frame(width: 80, height: 80)
+                        .foregroundColor(.black)
                         .padding()
 
                     TextField("Username", text: $username)
                         .padding()
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(10)
-                        .padding(.horizontal)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.black, lineWidth: 2)
+                        )
+                        .padding()
+                        .autocapitalization(.none)
 
+                    Spacer().frame(height: 5)
                     SecureField("Password", text: $password)
                         .padding()
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(10)
-                        .padding(.horizontal)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.black, lineWidth: 2)
+                        )
+                        .padding()
+                        .autocapitalization(.none)
 
-                    Button(action: {
-                        // Perform login logic here
-                        self.login()
-                    }) {
-                        Text("Login")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .padding()
-                            .frame(width: 220, height: 50)
-                            .background(Color.blue)
-                            .cornerRadius(10)
-                    }
-                    .padding(.top, 20)
+                    Text(loginModel.errorMessage)
+                        .foregroundColor(.red)
+                        .padding(.top, 10)
                     
                     NavigationLink(
-                        destination: RegisterView(),
-                        isActive: $isRegistering,
+                        destination: ArticleListView(),
+                        isActive: $isDashboardActive,
                         label: {
-                            Text("Not a member? Register Here")
-                                .font(.subheadline)
-                                .foregroundColor(.blue)
+                            EmptyView()
                         }
                     )
-                    .navigationBarBackButtonHidden(true)
-                    .padding(.top, 10)
-                    
-                    Spacer()
+                    .opacity(0)
+
+                    Button(action: {
+                        loginModel.login(username: username, password: password) { success, authToken in
+                            if success {
+                                isDashboardActive = true
+                                // Clear the text fields upon successful login
+                                username = ""
+                                password = ""
+                            }
+                        }
+                    }) {
+                        Text("Login")
+                            .font(.title)
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .padding(.horizontal, 20)
+                    }
+                    .padding(.top, 20)
+                    .disabled(loginModel.isLoading)
+
+                    if loginModel.isLoading {
+                        ProgressView("Logging in...")
+                            .padding(.top, 10)
+                    }
                 }
                 .padding()
-                .navigationTitle("News App Login")
-                .navigationBarBackButtonHidden(true)
-                
-                
-
-                if isLoggedin {
-                    Text("Welcome, \(username)!")
-                        .font(.title)
-                }
+                .navigationBarHidden(true) // Hide the navigation bar
             }
         }
-
-        func login() {
-            // You can implement your own login logic here
-            // For this example, we'll simply consider the user as logged in if both fields are filled
-            if !username.isEmpty && !password.isEmpty {
-                isLoggedin = true
-            }
+    struct LoginView_Previews: PreviewProvider {
+        static var previews: some View {
+            LoginView()
         }
-    }
-
-
-
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
     }
 }
