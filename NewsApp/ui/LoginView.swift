@@ -79,7 +79,16 @@ struct LoginView: View {
                     }
                     .padding(.top, 20)
                     .disabled(loginModel.isLoading)
-
+                    
+                    NavigationLink(
+                    destination: RegisterView(), // Specify your RegisterView here
+                    label: {
+                        Text("Register here")
+                            .font(.headline)
+                            .foregroundColor(.blue)
+                    })
+                    .padding(.top, 20)
+                    
                     if loginModel.isLoading {
                         ProgressView("Logging in...")
                             .padding(.top, 10)
@@ -88,6 +97,7 @@ struct LoginView: View {
                 .padding()
                 .navigationBarHidden(true) // Hide the navigation bar
             }
+            .navigationBarHidden(true)
         }
     struct LoginView_Previews: PreviewProvider {
         static var previews: some View {
