@@ -14,7 +14,7 @@ struct LoginView: View {
     @State private var isDashboardActive = false
 
         var body: some View {
-            NavigationView { // Wrap your view in a NavigationView
+            NavigationView { 
                 VStack {
                     Text("News App Login")
                         .font(.largeTitle)

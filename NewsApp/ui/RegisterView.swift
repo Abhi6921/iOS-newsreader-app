@@ -10,8 +10,9 @@ import SwiftUI
 struct RegisterView: View {
     @State private var username = ""
     @State private var password = ""
-    @StateObject private var loginModel = LoginViewModel()
+    @StateObject private var registerViewModel = RegisterViewModel()
     @State private var isDashboardActive = false
+    @State private var isRegisterationSuccessful = false
     
     var body: some View {
         NavigationView { // Wrap your view in a NavigationView
@@ -45,7 +46,7 @@ struct RegisterView: View {
                     .padding()
                     .autocapitalization(.none)
                 
-                Text(loginModel.errorMessage)
+                Text(registerViewModel.errorMessage)
                     .foregroundColor(.red)
                     .padding(.top, 10)
                 
@@ -59,12 +60,9 @@ struct RegisterView: View {
                 .opacity(0)
                 
                 Button(action: {
-                    loginModel.login(username: username, password: password) { success, authToken in
+                    registerViewModel.register(username: username, password: password) { success in
                         if success {
-                            isDashboardActive = true
-                            // Clear the text fields upon successful login
-                            username = ""
-                            password = ""
+                            isRegisterationSuccessful = true
                         }
                     }
                 }) {
@@ -78,7 +76,11 @@ struct RegisterView: View {
                         .padding(.horizontal, 20)
                 }
                 .padding(.top, 20)
-                .disabled(loginModel.isLoading)
+                .disabled(registerViewModel.isLoading)
+                
+                Text(registerViewModel.errorMessage)
+                .foregroundColor(.red)
+                .padding(.top, 10)
                 
                 NavigationLink(
                     destination: LoginView(), // Specify your RegisterView here
@@ -87,15 +89,17 @@ struct RegisterView: View {
                             .font(.headline)
                             .foregroundColor(.blue)
                     })
-                .padding(.top, 20)
-                
-                if loginModel.isLoading {
-                    ProgressView("Logging in...")
-                        .padding(.top, 10)
-                }
+                    .padding(.top, 20)
             }
             .padding()
             .navigationBarHidden(true) // Hide the navigation bar
+            
+            if registerViewModel.isLoading {
+                ProgressView("Registering...")
+                .padding(.top, 10)
+            }
+            
+            
         }
         .navigationBarHidden(true)
     }
