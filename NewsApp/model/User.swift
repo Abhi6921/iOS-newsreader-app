@@ -8,13 +8,13 @@
 import Foundation
 
 struct User: Codable {
+    
     let username: String
     let password: String
-    
-    // api/Users/login
     
     enum CodingKeys: String, CodingKey {
         case username = "UserName"
         case password = "Password"
     }
+    
 }

@@ -12,6 +12,17 @@ import Foundation
 class LoginViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage = ""
+    @Published var isLoggedIn: Bool {
+        didSet {
+            UserDefaults.standard.set(isLoggedIn, forKey: "isLoggedIn")
+        }
+    }
+    
+     
+    init() {
+        self.isLoggedIn = UserDefaults.standard.bool(forKey: "isLoggedIn")
+        
+    }
     
     func login(username: String, password: String, completion: @escaping (Bool, String?) -> Void) {
         isLoading = true
@@ -24,7 +35,7 @@ class LoginViewModel: ObservableObject {
             return
         }
         
-        let loginData = ["username": username, "password": password]
+        let loginData = ["UserName": username, "Password": password]
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -43,17 +54,18 @@ class LoginViewModel: ObservableObject {
                 self.isLoading = false
                 
                 guard let data = data, error == nil else {
-                    self.errorMessage = "Network error"
+                    self.errorMessage = "Network error: \(error?.localizedDescription ?? "Unknown error")"
                     completion(false, nil)
                     return
                 }
                 
                 do {
-                    // Parse the JSON response
                     if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] {
                         if let authToken = json["AuthToken"] as? String {
+                            print("AuthToken is: \(authToken)")
+                            self.isLoggedIn = true
+                            AuthManager.shared.setAuthToken(token: authToken)
                             completion(true, authToken)
-                            
                         } else {
                             self.errorMessage = "Authentication token missing in response"
                             completion(false, nil)
@@ -63,10 +75,15 @@ class LoginViewModel: ObservableObject {
                         completion(false, nil)
                     }
                 } catch {
-                    self.errorMessage = "Invalid User Credentials"
+                    self.errorMessage = "Invalid username or password! please try again"
                     completion(false, nil)
                 }
             }
         }.resume()
+    }
+
+    func logout() {
+        isLoggedIn = false
+        AuthManager.shared.removeAuthToken()
     }
 }

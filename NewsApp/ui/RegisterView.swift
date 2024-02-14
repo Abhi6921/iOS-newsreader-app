@@ -11,6 +11,7 @@ struct RegisterView: View {
     @State private var username = ""
     @State private var password = ""
     @StateObject private var registerViewModel = RegisterViewModel()
+    @ObservedObject var viewModel: LoginViewModel
     @State private var isDashboardActive = false
     @State private var isRegisterationSuccessful = false
     
@@ -51,7 +52,7 @@ struct RegisterView: View {
                     .padding(.top, 10)
                 
                 NavigationLink(
-                    destination: ArticleListView(),
+                    destination: ArticleListView(viewModel: viewModel),
                     isActive: $isDashboardActive,
                     label: {
                         EmptyView()
@@ -83,7 +84,7 @@ struct RegisterView: View {
                 .padding(.top, 10)
                 
                 NavigationLink(
-                    destination: LoginView(), // Specify your RegisterView here
+                    destination: LoginView(viewModel: viewModel), // Specify your RegisterView here
                     label: {
                         Text("Login Here")
                             .font(.headline)
@@ -105,8 +106,8 @@ struct RegisterView: View {
     }
 }
 
-struct RegisterView_Previews: PreviewProvider {
-    static var previews: some View {
-        RegisterView()
-    }
-}
+//struct RegisterView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RegisterView()
+//    }
+//}

@@ -16,22 +16,38 @@ struct ArticleDetailView: View {
                     .aspectRatio(contentMode: .fit)
                 VStack {
                     Text(article.title)
-                        .font(.title)
+                        .font(.system(size: 20))
                         .padding()
                     
                     Text(article.summary)
                         .font(.body)
                         .padding()
                     
-                    Text(article.publishDate).font(.body)
+                    if let formattedDate = formatDateString(article.publishDate) {
+                        Text("Published Date: \(formattedDate)")
+                            .padding()
+                    }
                     Link("More Info here", destination: URL(string: article.url)!)
                                     .font(.headline)
                                     .padding()
                     
-                    // Additional details and styling as needed
+                    
                 }
             }
             .edgesIgnoringSafeArea(.top)
+        }
+    
+    func formatDateString(_ dateString: String) -> String? {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+
+            if let date = dateFormatter.date(from: dateString) {
+                // Format the date into a human-readable string
+                dateFormatter.dateFormat = "MMMM d, yyyy h:mm a"
+                return dateFormatter.string(from: date)
+            } else {
+                return nil
+            }
         }
 }
 

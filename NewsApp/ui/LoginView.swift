@@ -10,8 +10,9 @@ import SwiftUI
 struct LoginView: View {
     @State private var username = ""
     @State private var password = ""
-    @StateObject private var loginModel = LoginViewModel()
+    @ObservedObject var viewModel: LoginViewModel
     @State private var isDashboardActive = false
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
 
         var body: some View {
             NavigationView { 
@@ -45,12 +46,12 @@ struct LoginView: View {
                         .padding()
                         .autocapitalization(.none)
 
-                    Text(loginModel.errorMessage)
+                    Text(viewModel.errorMessage)
                         .foregroundColor(.red)
                         .padding(.top, 10)
                     
                     NavigationLink(
-                        destination: ArticleListView(),
+                        destination: HomeView(viewModel: viewModel),
                         isActive: $isDashboardActive,
                         label: {
                             EmptyView()
@@ -59,12 +60,13 @@ struct LoginView: View {
                     .opacity(0)
 
                     Button(action: {
-                        loginModel.login(username: username, password: password) { success, authToken in
+                        viewModel.login(username: username, password: password) { success, authToken in
                             if success {
                                 isDashboardActive = true
                                 // Clear the text fields upon successful login
                                 username = ""
                                 password = ""
+                                isLoggedIn = viewModel.isLoggedIn
                             }
                         }
                     }) {
@@ -78,10 +80,10 @@ struct LoginView: View {
                             .padding(.horizontal, 20)
                     }
                     .padding(.top, 20)
-                    .disabled(loginModel.isLoading)
+                    .disabled(viewModel.isLoading)
                     
                     NavigationLink(
-                    destination: RegisterView(), // Specify your RegisterView here
+                    destination: RegisterView(viewModel: viewModel), // Specify your RegisterView here
                     label: {
                         Text("Register here")
                             .font(.headline)
@@ -89,7 +91,7 @@ struct LoginView: View {
                     })
                     .padding(.top, 20)
                     
-                    if loginModel.isLoading {
+                    if viewModel.isLoading {
                         ProgressView("Logging in...")
                             .padding(.top, 10)
                     }
@@ -99,9 +101,9 @@ struct LoginView: View {
             }
             .navigationBarHidden(true)
         }
-    struct LoginView_Previews: PreviewProvider {
-        static var previews: some View {
-            LoginView()
-        }
-    }
+//    struct LoginView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            LoginView()
+//        }
+//    }
 }

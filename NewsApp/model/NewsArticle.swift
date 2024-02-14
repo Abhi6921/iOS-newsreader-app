@@ -42,3 +42,17 @@ struct NewsArticle: Codable, Identifiable {
             case isLiked = "IsLiked"
         }
 }
+
+enum APIError: Error {
+    case missingAuthToken
+    case invalidURL
+    case noData
+}
+
+enum NetworkError: Error {
+    case invalidURL
+    case missingAuthToken
+    case invalidResponse
+    case noData
+    // Add more error cases as needed
+}
