@@ -19,7 +19,7 @@ struct NewsArticle: Codable, Identifiable {
     let categories: [Category]
     let isLiked: Bool
     
-    struct Category: Codable {
+    struct Category: Codable, Hashable {
         let id: Int
         let name: String
         

@@ -9,18 +9,16 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selectedTab = 0
-
     @ObservedObject var viewModel = LoginViewModel()
     
     var body: some View {
+                
         if (viewModel.isLoggedIn) {
             HomeView(viewModel: viewModel)
         }
         else {
             LoginView(viewModel: viewModel)
         }
-        
-        
     }
 }
 // TODO: Make the register user functionality work DONE

@@ -23,13 +23,34 @@ struct ArticleListView: View {
                         VStack {
                             List(newsController.newsArticles) { article in
                                 NavigationLink(
-                                    destination: ArticleDetailView(article: article)
+                                    destination: ArticleDetailView(article: article, viewModel: newsController, articleId: article.id)
                                 ) {
+                                    
                                     HStack(alignment: .center, spacing: 16) {
-                                        // Article Image
-                                        RemoteImage(url: article.image)
-                                            .frame(width: 80, height: 80)
-                                            .aspectRatio(contentMode: .fit)
+                                        
+                                        AsyncImage(url: URL(string: article.image)) { phase in
+                                            switch phase {
+                                                case .empty:
+                                                    
+                                                    Image("placeholder")
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                case .success(let image):
+                                                    image
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                case .failure(_):
+                                                    Image("placeholder")
+                                                        .resizable()
+                                                        .scaledToFit()
+                                            @unknown default:
+                                                Image("placeholder")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                            }
+                                               
+                                        }
+                                        .frame(width: 80, height: 80) // Adjust size as needed
                                         
                                         // Article Title
                                         VStack(alignment: .leading, spacing: 8) {
@@ -71,12 +92,4 @@ struct ArticleListView: View {
             .navigationBarHidden(true)
         }
 }
-
-
-//struct ArticleListView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ArticleListView()
-//    }
-//}
-
 

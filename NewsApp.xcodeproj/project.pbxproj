@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		590195392B86112900417A1D /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 590195382B86112900417A1D /* SplashScreen.swift */; };
 		5901F20C2AA3B157001F5D32 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5901F20B2AA3B157001F5D32 /* LoginView.swift */; };
 		5901F20E2AA3B7B3001F5D32 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5901F20D2AA3B7B3001F5D32 /* RegisterView.swift */; };
 		5901F2102AA3E31E001F5D32 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5901F20F2AA3E31E001F5D32 /* User.swift */; };
@@ -25,9 +26,12 @@
 		59913B022B77F9D6000FC792 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59913B012B77F9D6000FC792 /* Image.swift */; };
 		59913B042B77FCBA000FC792 /* AuthTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59913B032B77FCBA000FC792 /* AuthTokenManager.swift */; };
 		59D806852A57856E002A1FFE /* ArticleDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59D806842A57856E002A1FFE /* ArticleDetailView.swift */; };
+		59E5960D2B7E1B0200CA755E /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E5960C2B7E1B0200CA755E /* ToastView.swift */; };
+		59F8C7DA2B82871D00899937 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F8C7D92B82871D00899937 /* FavoritesViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		590195382B86112900417A1D /* SplashScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreen.swift; sourceTree = "<group>"; };
 		5901F20B2AA3B157001F5D32 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5901F20D2AA3B7B3001F5D32 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		5901F20F2AA3E31E001F5D32 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -47,6 +51,8 @@
 		59913B012B77F9D6000FC792 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		59913B032B77FCBA000FC792 /* AuthTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenManager.swift; sourceTree = "<group>"; };
 		59D806842A57856E002A1FFE /* ArticleDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailView.swift; sourceTree = "<group>"; };
+		59E5960C2B7E1B0200CA755E /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		59F8C7D92B82871D00899937 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +73,7 @@
 				590CE4102AABA249004A9275 /* RegisterViewModel.swift */,
 				5935C0292AADF11F005D62E0 /* ArticleViewModel.swift */,
 				59913B032B77FCBA000FC792 /* AuthTokenManager.swift */,
+				59F8C7D92B82871D00899937 /* FavoritesViewModel.swift */,
 			);
 			path = viewmodel;
 			sourceTree = "<group>";
@@ -129,6 +136,8 @@
 				5901F20D2AA3B7B3001F5D32 /* RegisterView.swift */,
 				596F36B52AACE69B00C20285 /* HomeView.swift */,
 				595370312AACFFB200E5B66D /* FavoritesView.swift */,
+				59E5960C2B7E1B0200CA755E /* ToastView.swift */,
+				590195382B86112900417A1D /* SplashScreen.swift */,
 			);
 			path = ui;
 			sourceTree = "<group>";
@@ -203,6 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				59E5960D2B7E1B0200CA755E /* ToastView.swift in Sources */,
 				5935C02A2AADF11F005D62E0 /* ArticleViewModel.swift in Sources */,
 				5901F20E2AA3B7B3001F5D32 /* RegisterView.swift in Sources */,
 				598543462A576EC100B4A397 /* ArticleListView.swift in Sources */,
@@ -214,8 +224,10 @@
 				596D0EE0290D322400354942 /* ContentView.swift in Sources */,
 				59913B022B77F9D6000FC792 /* Image.swift in Sources */,
 				590CE4112AABA249004A9275 /* RegisterViewModel.swift in Sources */,
+				59F8C7DA2B82871D00899937 /* FavoritesViewModel.swift in Sources */,
 				59679ABE2AA4B37B00E3D2A8 /* LoginViewModel.swift in Sources */,
 				5901F20C2AA3B157001F5D32 /* LoginView.swift in Sources */,
+				590195392B86112900417A1D /* SplashScreen.swift in Sources */,
 				5901F2102AA3E31E001F5D32 /* User.swift in Sources */,
 				596D0EDE290D322400354942 /* NewsApp.swift in Sources */,
 				59913B042B77FCBA000FC792 /* AuthTokenManager.swift in Sources */,

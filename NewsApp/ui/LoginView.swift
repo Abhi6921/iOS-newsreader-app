@@ -68,6 +68,10 @@ struct LoginView: View {
                                 password = ""
                                 isLoggedIn = viewModel.isLoggedIn
                             }
+                            else {
+                                username = ""
+                                password = ""
+                            }
                         }
                     }) {
                         Text("Login")

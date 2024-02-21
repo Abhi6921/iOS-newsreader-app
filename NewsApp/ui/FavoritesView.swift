@@ -9,8 +9,7 @@ import SwiftUI
 
 struct FavoritesView: View {
     @EnvironmentObject var articleViewModel: ArticleViewModel
-//    @Environment(\.presentationMode) var presentationMode // Add this environment variable
-
+    
     var body: some View {
           
         NavigationView {
@@ -22,7 +21,7 @@ struct FavoritesView: View {
                         List {
                             ForEach(articleViewModel.favoritedArticles, id: \.id) { article in
                                 NavigationLink(
-                                    destination: ArticleDetailView(article: article)
+                                    destination: ArticleDetailView(article: article, viewModel: articleViewModel, articleId: article.id)
                                 ) {
                                     HStack(alignment: .center, spacing: 16) {
                                         // Article Image
